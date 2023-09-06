@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Kunstnere</title>
+</head>
+<body>
+    <h1>Kunstnere</h1>
+    
+    <!-- Form til at oprette kunstnere -->
+    <form id="artist-form">
+        <input type="text" id="artist-name" placeholder="Kunstnerens navn" required>
+        <input type="text" id="artist-genre" placeholder="Genre" required>
+        <button type="submit">Tilføj kunstner</button>
+    </form>
+
+    <!-- Liste over kunstnere -->
+    <div id="artist-list"></div>
+
+    <!-- Favoritliste -->
+    <h2>Favoritkunstnere</h2>
+    <ul id="favorites-list"></ul>
+
+    <script src="frontend.js"></script>
+</body>
+</html>
