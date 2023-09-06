@@ -1,83 +1,67 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
+import fs from "fs/promises";
+import express from "express";
+import cors from "cors";
 
+// --- Create express app and set port --- //
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-// JSON-fil som datakilde
-const dataFilePath = 'artists.json';
+app.use(cors());
 
-// Middleware til at tjekke om JSON-filen eksisterer, hvis ikke, opret en tom liste
-app.use((req, res, next) => {
-  if (!fs.existsSync(dataFilePath)) {
-    fs.writeFileSync(dataFilePath, '[]', 'utf-8');
-  }
-  next();
+app.get('/artists/data', async (req, res) => {
+    const data = await fs.readFile(`data.json`);
+    const artists = JSON.parse(data);
+    res.json(artists);
 });
 
-// GET alle kunstnere
-app.get('/artists', (req, res) => {
-  const artists = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-  res.json(artists);
+app.get('/artists/data/:id', (req, res) => {
+    const result = artists.find(artist => artist.id === Number(req.params.id));
+    res.json(result);
 });
 
-// GET kunstner ved ID
-app.get('/artists/:id', (req, res) => {
-  const artists = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-  const artist = artists.find((a) => a.id === req.params.id);
-
-  if (!artist) {
-    return res.status(404).json({ error: 'Kunstner ikke fundet' });
-  }
-
-  res.json(artist);
+app.post('/artists/data', async (req, res) => {
+    const newArtist = req.body;
+    const data = await fs.readFile(`data.json`);
+    const artists = JSON.parse(data);
+    console.log(newArtist);
+    newArtist.id = new Date().getTime();
+    artists.push(newArtist);
+    fs.writeFile("data.json", JSON.stringify(artists))
+    res.json(artists);
 });
 
-// POST en ny kunstner
-app.post('/artists', (req, res) => {
-  const artists = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-  const newArtist = req.body;
+app.put('/artists/data/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    const updatedArtist = req.body;
 
-  // Tilføj et unikt id til kunstneren
-  newArtist.id = Date.now().toString();
+    const data = await fs.readFile(`data.json`);
+    const artists = JSON.parse(data);
 
-  artists.push(newArtist);
-  fs.writeFileSync(dataFilePath, JSON.stringify(artists, null, 2), 'utf-8');
-  res.status(201).json(newArtist);
+    const index = artists.findIndex(artist => artist.id === id);
+
+    if (index !== -1) {
+        artists[index] = updatedArtist;
+        await fs.writeFile("data.json", JSON.stringify(artists));
+        res.json(updatedArtist);
+    } else {
+        res.status(404).json({ error: "Artist not found" });
+    }
 });
 
-// PUT/PATCH en eksisterende kunstner ved ID
-app.put('/artists/:id', (req, res) => {
-  const artists = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-  const updatedArtist = req.body;
-  const existingArtistIndex = artists.findIndex((a) => a.id === req.params.id);
+app.delete('/artists/data/:id', async (req, res) => {
+    const id = Number(req.params.id);
 
-  if (existingArtistIndex === -1) {
-    return res.status(404).json({ error: 'Kunstner ikke fundet' });
-  }
+    const data = await fs.readFile(`data.json`);
+    const artists = JSON.parse(data);
 
-  artists[existingArtistIndex] = updatedArtist;
-  fs.writeFileSync(dataFilePath, JSON.stringify(artists, null, 2), 'utf-8');
-  res.json(updatedArtist);
-});
+    const updatedArtists = artists.filter(artist => artist.id !== id)
 
-// DELETE en kunstner ved ID
-app.delete('/artists/:id', (req, res) => {
-  const artists = JSON.parse(fs.readFileSync(dataFilePath, 'utf-8'));
-  const existingArtistIndex = artists.findIndex((a) => a.id === req.params.id);
+    fs.writeFile("data.json", JSON.stringify(updatedArtists))
+    res.json(updatedArtists)
+})
 
-  if (existingArtistIndex === -1) {
-    return res.status(404).json({ error: 'Kunstner ikke fundet' });
-  }
-
-  const deletedArtist = artists.splice(existingArtistIndex, 1)[0];
-  fs.writeFileSync(dataFilePath, JSON.stringify(artists, null, 2), 'utf-8');
-  res.json(deletedArtist);
-});
-
-app.listen(port, () => {
-  console.log(`Server kører på port ${port}`);
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
 });

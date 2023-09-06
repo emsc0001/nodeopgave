@@ -1,4 +1,3 @@
-
 // Kunstnerliste
 let artists = [];
 
