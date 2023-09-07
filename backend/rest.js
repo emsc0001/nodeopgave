@@ -5,9 +5,9 @@ import { displayArtists, addGenreToOutput, removeGenreToOutput, displayFavorites
 let selectedArtist;
 let globalArtists;
 
-const endpoint = "http://localhost:2001";
+export const endpoint = "http://localhost:1997";
 
-async function readArtists() {
+export async function readArtists() {
   const response = await fetch(`${endpoint}/artists`);
   const data = await response.json();
   const artists = Object.keys(data).map((key) => ({ id: key, ...data[key] }));
@@ -60,10 +60,8 @@ async function createArtist(event) {
 // UPDATE
 function selectArtist(artist) {
   document.querySelector("#dialog-update-artist").showModal();
-
   console.log(artist);
   selectedArtist = artist;
-
   const form = document.querySelector("#form-edit-artist");
 
   form.name.value = artist.name;
@@ -78,14 +76,10 @@ function selectArtist(artist) {
 
   document
     .querySelector("#extra-genre-btn-edit")
-    .addEventListener("click", () =>
-      addGenreToOutput(document.querySelector("#edit-genres"), document.querySelector("#genre-output-edit"))
+    .addEventListener("click", () => addGenreToOutput(document.querySelector("#edit-genres"), document.querySelector("#genre-output-edit"))
     );
-  document
-    .querySelector("#remove-genre-btn-edit")
-    .addEventListener("click", () => removeGenreToOutput(document.querySelector("#genre-output-edit")));
-
-  document.querySelector("#form-edit-artist").addEventListener("submit", updateArtist);
+    document.querySelector("#remove-genre-btn-edit").addEventListener("click", () => removeGenreToOutput(document.querySelector("#genre-output-edit")));
+    document.querySelector("#form-edit-artist").addEventListener("submit", updateArtist);
 }
 
 async function updateArtist(event) {
@@ -102,7 +96,6 @@ async function updateArtist(event) {
   const genres = form.genreOutput.textContent;
   const shortDescription = form.description.value;
   const image = form.image.value;
-
   const artistToUpdate = {
     name,
     birthdate,
@@ -129,7 +122,6 @@ async function updateArtist(event) {
 
 async function updateArtistFavorite(artist) {
   console.log(artist);
-
   const name = artist.name;
   const birthdate = artist.birthdate;
   const activeSince = artist.activeSince;
@@ -139,7 +131,6 @@ async function updateArtistFavorite(artist) {
   const shortDescription = artist.shortDescription;
   const image = artist.image;
   const favorite = artist.favorite;
-
   const artistToUpdate = {
     name,
     birthdate,
@@ -165,8 +156,6 @@ async function updateArtistFavorite(artist) {
   }
 }
 
-// DELETE
-
 async function deleteArtist(id) {
   console.log(id);
   const response = await fetch(`${endpoint}/artists/${id}`, {
@@ -177,14 +166,9 @@ async function deleteArtist(id) {
   }
 }
 
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
 async function updateArtistsGrid() {
   const artists = await readArtists();
   globalArtists = artists;
-  // const filteredList = filterList(artists);
   displayArtists(artists);
   displayFavorites(artists.filter((artist) => artist.favorite == true));
 }

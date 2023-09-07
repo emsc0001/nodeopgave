@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (request, response) => {
-  response.send("Hejsa server😍");
+  response.send("HELOOOOOOOOOOOOO server");
 });
 
 app.get("/artists", async (request, response) => {
@@ -16,6 +16,7 @@ app.get("/artists", async (request, response) => {
   const sortedArtists = artists.sort((a, b) => a.name.localeCompare(b.name));
   response.json(sortedArtists);
 });
+
 app.get("/artists/:id", async (request, response) => {
   const id = Number(request.params.id);
   console.log(id);
@@ -37,12 +38,9 @@ app.post("/artists", async (request, response) => {
 
 app.put("/artists/:id", async (request, response) => {
   const id = request.params.id;
-
   const data = await fs.readFile("backend/artists.json");
   const artists = JSON.parse(data);
-  // const sortedArtists = artists.sort((a, b) => a.name.localeCompare(b.name));
   let artistToUpdate = artists.find((artist) => artist.id == id);
-
   if (!artistToUpdate) {
     response.status(404).json({ error: "Artist not found" });
     return;
@@ -68,17 +66,13 @@ app.put("/artists/:id", async (request, response) => {
 app.delete("/artists/:id", async (request, response) => {
   const id = request.params.id;
   console.log(id);
-
   const data = await fs.readFile("backend/artists.json");
   const artists = JSON.parse(data);
-
   const newArtists = artists.filter((artist) => artist.id != id);
-
   fs.writeFile("backend/artists.json", JSON.stringify(newArtists));
-
   response.json(artists);
 });
 
-app.listen(2001, () => {
-  console.log("Kører på http://localhost:2001");
+app.listen(1997, () => {
+  console.log("Kører på http://localhost:1997");
 });
