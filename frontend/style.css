@@ -1,7 +1,7 @@
 body {
     margin: 0;
     font-size: 1.3em;
-    background-color: #fff59d;
+    background-color: #9dfff8;
   }
   a {
     color: black;
@@ -40,7 +40,7 @@ body {
   header {
     border-bottom: 2px solid black;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
-    background-color: #dce775;
+    background-color: #75e7e7;
     padding: 2em;
     display: flex;
     grid-template-columns: 1fr;
@@ -53,7 +53,7 @@ body {
   /* footer styling */
   
   footer {
-    background-color: #dce775;
+    background-color: #75cae7;
     padding: 1em;
     text-align: center;
   }
@@ -100,7 +100,7 @@ body {
   .grid-item-user {
     box-shadow: 1px 1px 8px;
     padding: 0.85em;
-    background-color: #dce775;
+    background-color: #75c5e7;
     transition: 0.5s;
     animation: fadeIn 0.5s;
     border-radius: 1em;
@@ -165,7 +165,7 @@ body {
     cursor: pointer;
     border: 2px solid;
     color: black;
-    background-color: #fff59d;
+    background-color: #9df5ff;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 0.5em 1em;
@@ -181,7 +181,7 @@ body {
     text-align: center;
     cursor: pointer;
     border: 2px solid;
-    background-color: #bbf164;
+    background-color: #64adf1;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     padding: 0.5em 1em;
@@ -197,12 +197,12 @@ body {
     margin-bottom: 10px;
     border: 2px solid black;
     border-radius: 4px;
-    background-color: #bbf164;
+    background-color: #6487f1;
     color: black;
   }
   
   select {
-    background-color: #fff59d;
+    background-color: #9dadff;
     border: none;
     padding: 1em;
     max-width: 350px;
@@ -211,14 +211,14 @@ body {
   .sort {
     border: 2px solid black;
     margin-left: 0;
-    background-color: #bbf164;
+    background-color: #8a64f1;
   }
   
   /* dialog styling */
   
   dialog {
-    border-color: #fff59d;
-    background: #fff59d;
+    border-color: #a09dff;
+    background: #9da4ff;
     position: fixed;
     top: 90vh;
     max-height: 88vh;
