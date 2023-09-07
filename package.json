@@ -5,10 +5,9 @@
   "name": "nodeopgave",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
-  "scripts": {
-  },
+  "scripts": {},
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "Installer Node.js, express og cors ved at køre følgende kommandoer i terminalen:",
+  "devDependencies": {}
 }

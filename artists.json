@@ -1,0 +1,62 @@
+[
+  {
+    "id": "36",
+    "name": "MØ",
+    "birthdate": "1988-08-13",
+    "activeSince": "2006",
+    "genres": "electronic, pop",
+    "label": "Columbia Records",
+    "website": "https://www.momomoyouth.com",
+    "image": "https://www.billboard.com/files/styles/article_main_image/public/media/mo-2022-billboard-1548.jpg",
+    "shortDescription": "Danish electropop singer and songwriter.",
+    "favorite": false
+  },
+  {
+    "id": "37",
+    "name": "Volbeat",
+    "birthdate": "2001-10-03",
+    "activeSince": "2001",
+    "genres": "rock, metal",
+    "label": "Republic Records",
+    "website": "https://www.volbeat.dk",
+    "image": "https://i.scdn.co/image/ab6761610000e5eb187c1be30acff750fa61d981",
+    "shortDescription": "Danish heavy metal band known for their unique style.",
+    "favorite": false
+  },
+  {
+    "id": "38",
+    "name": "Lucas Graham",
+    "birthdate": "1988-09-18",
+    "activeSince": "2010",
+    "genres": "pop, soul",
+    "label": "Warner Records",
+    "website": "https://www.lukasgraham.com",
+    "image": "https://i.scdn.co/image/ab6761610000e5eb03ad9b41be700b87c7887db7",
+    "shortDescription": "Danish pop and soul band led by Lukas Graham Forchhammer.",
+    "favorite": false
+  },
+  {
+    "id": "39",
+    "name": "Aqua",
+    "birthdate": "1989-08-05",
+    "activeSince": "1994",
+    "genres": "pop, eurodance",
+    "label": "Universal Music",
+    "website": "https://www.aquaofficial.com",
+    "image": "https://i.scdn.co/image/ab6761610000e5ebeda7d788b5b42f7a791ad1b1",
+    "shortDescription": "Danish-Norwegian pop group known for their hit single 'Barbie Girl.'",
+    "favorite": false
+  },
+  {
+    "id": "40",
+    "name": "Agnes Obel",
+    "birthdate": "1980-10-28",
+    "activeSince": "2008",
+    "genres": "indie, folk",
+    "label": "PIAS Recordings",
+    "website": "https://www.agnesobel.com",
+    "image": "https://i.scdn.co/image/ab6761610000e5ebd90339d4f6f95d62cebe4a26",
+    "shortDescription": "Danish singer-songwriter known for her hauntingly beautiful music.",
+    "favorite": false
+  }
+]
