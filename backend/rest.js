@@ -1,6 +1,6 @@
 "use strict";
 
-import { displayArtists, addGenreToOutput, removeGenreToOutput, displayFavorites } from "./app.js";
+import { displayArtists, addGenreToOutput, removeGenreToOutput, displayFavorites } from "../frontend/app.js";
 
 let selectedArtist;
 let globalArtists;

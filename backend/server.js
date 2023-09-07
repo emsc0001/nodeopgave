@@ -31,7 +31,7 @@ app.post("/artists", async (request, response) => {
   const data = await fs.readFile("backend/artists.json");
   const artists = JSON.parse(data);
   artists.push(newArtist);
-  fs.writeFile("artists.json", JSON.stringify(artists));
+  fs.writeFile("backend/artists.json", JSON.stringify(artists));
   response.json(artists);
 });
 
@@ -42,6 +42,12 @@ app.put("/artists/:id", async (request, response) => {
   const artists = JSON.parse(data);
   // const sortedArtists = artists.sort((a, b) => a.name.localeCompare(b.name));
   let artistToUpdate = artists.find((artist) => artist.id == id);
+
+  if (!artistToUpdate) {
+    response.status(404).json({ error: "Artist not found" });
+    return;
+  }
+  
   const body = request.body;
   artistToUpdate.name = body.name;
   artistToUpdate.birthdate = body.birthdate;

@@ -7,7 +7,7 @@ import {
   createArtist,
   updateArtistFavorite,
   globalArtists,
-} from "./rest.js";
+} from "../backend/rest.js";
 
 
 let sortType = "default";
