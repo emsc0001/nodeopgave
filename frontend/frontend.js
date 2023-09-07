@@ -1,70 +1,79 @@
-// Kunstnerliste
-let artists = [];
+"use strict";
 
-// Form til oprettelse af kunstner
-const artistForm = document.getElementById("artist-form");
-const artistNameInput = document.getElementById("artist-name");
-const artistGenreInput = document.getElementById("artist-genre");
-const artistList = document.getElementById("artist-list");
-const favoritesList = document.getElementById("favorites-list");
+window.addEventListener("load", start);
 
-// Lyt til indsendelse af kunstnerformularen
-artistForm.addEventListener("submit", (e) => {
-    e.preventDefault();
+import { cancelClicked, cancelClickedInUpdate } from "./modules/submit.js";
+import { ShowFavorites, showCreateForm } from "./modules/dialogue.js";
+import { showAllArtists, showAllFavorites } from "./modules/display.js";
 
-    const artistName = artistNameInput.value;
-    const artistGenre = artistGenreInput.value;
+const endpoint = 'http://localhost:3000'
 
-    if (artistName && artistGenre) {
-        const artist = { name: artistName, genre: artistGenre, favorite: false };
-        artists.push(artist);
-        artistNameInput.value = "";
-        artistGenreInput.value = "";
-        renderArtists();
+export async function start() {
+    
+    const artistData = await getData();
+
+    document.querySelector("#add-new button")
+    .addEventListener("click", showCreateForm);
+
+    document.querySelector("#show-favorites-button")
+    .addEventListener("click", ShowFavorites);
+
+    document.querySelector("#show-favorites-button")
+    .addEventListener('click', showAllFavorites);
+
+    document.querySelector("#cancelButton")
+    .addEventListener("click", cancelClicked);
+
+    showAllArtists(artistData);
+}
+
+export async function getData() {
+    const response = await fetch(`${endpoint}/artists/data`);
+    const data = await response.json();
+    return data;
+}
+
+export async function createNew(newArtist) {
+    const json = JSON.stringify(newArtist);
+    const response = await fetch(`${endpoint}/artists/data`,
+    {   
+        headers: {'Content-Type': 'application/json'},
+        method: "POST",
+        body: json
+    });
+
+    if(response.ok) {
+       const artists = await response.json();
+       showAllArtists(artists);
     }
-});
+}
 
-// Funktion til at vise kunstnere
-function renderArtists() {
-    artistList.innerHTML = "";
+export async function deleteArtist(id) {
+    const idAsInteger = Number(id);
 
-    artists.forEach((artist, index) => {
-        const artistItem = document.createElement("div");
-        artistItem.classList.add("artist-item");
-        artistItem.innerHTML = `
-            <span>${artist.name} (${artist.genre})</span>
-            <button onclick="toggleFavorite(${index})">${artist.favorite ? "Fjern favorit" : "Favorit"}</button>
-            <button onclick="deleteArtist(${index})">Slet</button>
-        `;
+    const response = await fetch(`${endpoint}/artists/data/${idAsInteger}`,
+    {method: 'DELETE'}
+    );
 
-        artistList.appendChild(artistItem);
+    if(response.ok) {
+        const artists = await response.json();
+        showAllArtists(artists);
+    }
+};
+
+export async function updateArtist(artist){
+    const idAsInteger = Number(artist.id)
+    const json = JSON.stringify(artist);
+
+    const response = await fetch(`${endpoint}/artists/data/${idAsInteger}`, {
+        headers: {'Content-Type': 'application/json'},
+        method: 'PUT',
+        body: json,
     });
 
-    renderFavorites();
-}
-
-// Funktion til at markere/fjerne en kunstner som favorit
-function toggleFavorite(index) {
-    artists[index].favorite = !artists[index].favorite;
-    renderArtists();
-}
-
-// Funktion til at slette en kunstner
-function deleteArtist(index) {
-    artists.splice(index, 1);
-    renderArtists();
-}
-
-// Funktion til at vise favoritkunstnere
-function renderFavorites() {
-    const favorites = artists.filter((artist) => artist.favorite);
-    favoritesList.innerHTML = "";
-    favorites.forEach((favorite) => {
-        const favoriteItem = document.createElement("li");
-        favoriteItem.textContent = `${favorite.name} (${favorite.genre})`;
-        favoritesList.appendChild(favoriteItem);
-    });
-}
-
-// Initial rendering
-renderArtists();
+    if(response.ok) {
+        const artists = await response.json();
+        showAllArtists(artists);
+        cancelClickedInUpdate();
+    }
+};

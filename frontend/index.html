@@ -3,26 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Kunstnere</title>
+    <title>Music artist app</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
 </head>
 <body>
-    <h1>Kunstnere</h1>
     
-    <!-- Form til at oprette kunstnere -->
-    <form id="artist-form">
-        <input type="text" id="artist-name" placeholder="Kunstnerens navn" required>
-        <input type="text" id="artist-genre" placeholder="Genre" required>
-        <button type="submit">Tilføj kunstner</button>
-    </form>
+    <header>
+        <h1>Welcome to the Music Artist App</h1>
+    </header>
 
-    <!-- Liste over kunstnere -->
-    <div id="artist-list"></div>
+    <div id="sort-filter-search-create-container">
+        <div id="show-favorites-button"><button>Show favorites</button></div>
+        <br>
+        <div id="add-new">
+            <button>Add new artist</button>
+        </div>
+        <br>
+        <div id="sort">
+            <label for="">Sort by:</label>
+            <select name="sort" id="sortSelect">
+                <option value="" selected></option>
+                <option value="name">Name</option>
+                <option value="birthdate">Birthdate</option>
+                <option value="activeSince">Active Since</option>
+            </select>
+        </div>
+        <div id="filter">
+            <label for="">Filter by:</label>
+            <select name="filter" id="filterSelect">
+                <option value="" selected></option>
+                <option value="Pop">Pop</option>
+                <option value="Rock">Rock</option>
+                <option value="Rap">Rap</option>
+                <option value="Country">Country</option>
+                <option value="R&B">R&B</option>
+                <option value="Electropop">Electropop</option>
+                <option value="Dance">Dance</option>
+                <option value="Soul">Soul</option>
+                <option value="Singer-Songwriter">Singer-Songwriter</option>
+            </select>
+        </div>
+    </div>
 
-    <!-- Favoritliste -->
-    <h2>Favoritkunstnere</h2>
-    <ul id="favorites-list"></ul>
+    <div id="artists">
+        <h2>Artist Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Birthdate</th>
+                    <th>Active Since</th>
+                    <th>Genres</th>
+                    <th>Labels</th>
+                    <th>Website</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th colspan="2">Buttons</th>
+                </tr>
+            </thead>
+            <tbody id="artistTableBody">
+            </tbody>
+        </table>
+    </div>
+        
+    
+    <section id="about">
+        <h2>About Us</h2>
+        <p>We are a platform dedicated to showcasing talented artists from around the world.</p>
+    </section>
 
-    <script src="frontend.js"></script>
+    <footer>
+        <p>&copy; 2023 Music Artist App</p>
+    </footer> 
+
+    <dialog id="create-new-dialog">
+        <form id="artistForm">
+            <h2>Add artist</h2><br>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br><br>
+
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate" name="birthdate" required><br><br>
+
+            <label for="activeSince">Active since year:</label>
+            <input type="number" id="activeSince" name="activeSince" min="1950" max="2023" placeholder="YYYY"><br><br>
+
+            <label>Genres:</label><br>
+            <input type="checkbox" id="pop" class="genre-checkbox" name="genres" value="Pop">
+            <label for="pop">Pop</label><br>
+            <input type="checkbox" id="country" class="genre-checkbox" name="genres" value="Country">
+            <label for="country">Country</label><br>
+            <input type="checkbox" id="R&B" class="genre-checkbox" name="genres" value="R&B">
+            <label for="R&B">R&B</label><br>
+            <input type="checkbox" id="electropop" class="genre-checkbox" name="genres" value="Electropop">
+            <label for="electropop">Electropop</label><br>
+            <input type="checkbox" id="folk" class="genre-checkbox" name="genres" value="Folk">
+            <label for="folk">Folk</label><br>
+            <input type="checkbox" id="hiphop" class="genre-checkbox" name="genres" value="Hip-Hop">
+            <label for="hiphop">Hip-Hop</label><br>
+            <input type="checkbox" id="singersongwriter" class="genre-checkbox" name="genres" value="Singer-Songwriter">
+            <label for="singersongwriter">Singer-Songwriter</label><br>
+            <input type="checkbox" id="dance" class="genre-checkbox" name="genres" value="Dance">
+            <label for="dance">Dance</label><br>
+            <input type="checkbox" id="soul" class="genre-checkbox" name="genres" value="Soul">
+            <label for="soul">Soul</label><br>
+            <input type="checkbox" id="rap" class="genre-checkbox" name="genres" value="Rap">
+            <label for="rap">Rap</label><br>
+            <br>
+            <label for="labels">Labels (comma-separated):</label>
+            <input type="text" id="labels" name="labels"><br><br>
+
+            <label for="website">Website:</label>
+            <input type="url" id="website" name="website"><br><br>
+
+            <label for="image">Image URL:</label>
+            <input type="url" id="image" name="image"><br><br>
+
+            <label for="shortDescription">Short Description:</label><br>
+            <textarea id="shortDescription" name="shortDescription" rows="4" cols="50"></textarea><br><br>
+
+            <input type="submit" value="Add Artist">
+            <input type="button" value="Cancel" id="cancelButton">
+        </form>
+    </dialog>
+
+    <dialog id="update-dialog">
+        <form id="updateForm">
+            <h2>Update artist</h2>
+            <br>
+            <label for="name">Name:</label>
+            <input type="text" id="nameInUpdate" name="name" required><br><br>
+
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdateInUpdate" name="birthdate" required><br><br>
+
+            <label for="activeSince">Active since year:</label>
+            <input type="number" id="activeSinceInUpdate" name="activeSince" min="1950" max="2023" placeholder="YYYY"><br><br>
+
+            <label>Genres:</label><br><br>
+            <input type="checkbox" id="popInUpdate" class="genre-checkbox" name="genres" value="Pop">
+            <label for="pop">Pop</label><br>
+            <input type="checkbox" id="countryInUpdate" class="genre-checkbox" name="genres" value="Country">
+            <label for="country">Country</label><br>
+            <input type="checkbox" id="R&BInUpdate" class="genre-checkbox" name="genres" value="R&B">
+            <label for="R&B">R&B</label><br>
+            <input type="checkbox" id="electropopInUpdate" class="genre-checkbox" name="genres" value="Electropop">
+            <label for="electropop">Electropop</label><br>
+            <input type="checkbox" id="folkInUpdate" class="genre-checkbox" name="genres" value="Folk">
+            <label for="folk">Folk</label><br>
+            <input type="checkbox" id="hiphopInUpdate" class="genre-checkbox" name="genres" value="Hip-Hop">
+            <label for="hiphop">Hip-Hop</label><br>
+            <input type="checkbox" id="singersongwriterInUpdate" class="genre-checkbox" name="genres" value="Singer-Songwriter">
+            <label for="singersongwriter">Singer-Songwriter</label><br>
+            <input type="checkbox" id="danceInUpdate" class="genre-checkbox" name="genres" value="Dance">
+            <label for="dance">Dance</label><br>
+            <input type="checkbox" id="soulInUpdate" class="genre-checkbox" name="genres" value="Soul">
+            <label for="soul">Soul</label><br>
+            <input type="checkbox" id="rapInUpdate" class="genre-checkbox" name="genres" value="Rap">
+            <label for="rap">Rap</label><br><br>
+
+            <label for="labels">Labels (comma-separated):</label>
+            <input type="text" id="labelsInUpdate" name="labels"><br><br>
+
+            <label for="website">Website:</label>
+            <input type="url" id="websiteInUpdate" name="website"><br><br>
+
+            <label for="image">Image URL:</label>
+            <input type="url" id="imageInUpdate" name="image"><br><br>
+
+            <label for="shortDescription">Short Description:</label><br>
+            <textarea id="shortDescriptionInUpdate" name="shortDescription" rows="4" cols="50" ></textarea><br><br>
+
+            <input type="checkbox" id="favoriteInUpdate" class="favorite-checkbox" name="favorite" value="favorite">
+            <label for="favorite">Favorite</label><br><br>
+
+            <input type="submit" value="Update Artist" id="updateButton">
+            <input type="button" value="Cancel" id="cancelButtonInUpdate">
+        </form>
+    </dialog>
+
+    <dialog id="favorites-dialog">
+        <div id="artists">
+        <h2>Favorite artists</h2>
+        <input type="button" value="Cancel" id="cancelButtonInFavorites">
+        <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Birthdate</th>
+                        <th>Active Since</th>
+                        <th>Genres</th>
+                        <th>Labels</th>
+                        <th>Website</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody id="favoriteArtistTableBody">
+                </tbody>
+            </table>
+        </div>
+    </dialog>
+
+    <script type="module" src="rest.js"></script>
+
 </body>
 </html>
+
