@@ -1,13 +1,14 @@
 "use strict";
 
 import { displayArtists, addGenreToOutput, removeGenreToOutput, displayFavorites } from "../frontend/app.js";
+export { updateArtistsGrid, createArtist, deleteArtist, selectArtist, updateArtistFavorite, globalArtists };
 
 let selectedArtist;
 let globalArtists;
 
-export const endpoint = "http://localhost:3000";
+const endpoint = "http://localhost:3000";
 
-export async function readArtists() {
+async function readArtists() {
   const response = await fetch(`${endpoint}/artists`);
   const data = await response.json();
   const artists = Object.keys(data).map((key) => ({ id: key, ...data[key] }));
@@ -173,4 +174,3 @@ async function updateArtistsGrid() {
   displayFavorites(artists.filter((artist) => artist.favorite == true));
 }
 
-export { updateArtistsGrid, createArtist, deleteArtist, selectArtist, updateArtistFavorite, globalArtists };
