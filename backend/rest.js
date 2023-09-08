@@ -5,7 +5,7 @@ import { displayArtists, addGenreToOutput, removeGenreToOutput, displayFavorites
 let selectedArtist;
 let globalArtists;
 
-export const endpoint = "http://localhost:1997";
+export const endpoint = "http://localhost:3000";
 
 export async function readArtists() {
   const response = await fetch(`${endpoint}/artists`);
@@ -13,7 +13,7 @@ export async function readArtists() {
   const artists = Object.keys(data).map((key) => ({ id: key, ...data[key] }));
   return artists;
 }
-// CREATE
+
 async function createArtist(event) {
   event.preventDefault();
   console.log("Opret bruger");

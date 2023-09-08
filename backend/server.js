@@ -11,7 +11,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/artists", async (request, response) => {
-  const data = await fs.readFile("backend/artists.json");
+  const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
   const sortedArtists = artists.sort((a, b) => a.name.localeCompare(b.name));
   response.json(sortedArtists);
@@ -20,7 +20,7 @@ app.get("/artists", async (request, response) => {
 app.get("/artists/:id", async (request, response) => {
   const id = Number(request.params.id);
   console.log(id);
-  const data = await fs.readFile("backend/artists.json");
+  const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
   const result = artists.find((artist) => artist.id == id);
   response.json(result);
@@ -29,7 +29,7 @@ app.get("/artists/:id", async (request, response) => {
 app.post("/artists", async (request, response) => {
   const newArtist = request.body;
   newArtist.id = new Date().getTime();
-  const data = await fs.readFile("backend/artists.json");
+  const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
   artists.push(newArtist);
   fs.writeFile("backend/artists.json", JSON.stringify(artists));
@@ -38,7 +38,7 @@ app.post("/artists", async (request, response) => {
 
 app.put("/artists/:id", async (request, response) => {
   const id = request.params.id;
-  const data = await fs.readFile("backend/artists.json");
+  const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
   let artistToUpdate = artists.find((artist) => artist.id == id);
   if (!artistToUpdate) {
@@ -66,13 +66,13 @@ app.put("/artists/:id", async (request, response) => {
 app.delete("/artists/:id", async (request, response) => {
   const id = request.params.id;
   console.log(id);
-  const data = await fs.readFile("backend/artists.json");
+  const data = await fs.readFile("artists.json");
   const artists = JSON.parse(data);
   const newArtists = artists.filter((artist) => artist.id != id);
-  fs.writeFile("backend/artists.json", JSON.stringify(newArtists));
+  fs.writeFile("artists.json", JSON.stringify(newArtists));
   response.json(artists);
 });
 
-app.listen(1997, () => {
-  console.log("Kører på http://localhost:1997");
+app.listen(3000, () => {
+  console.log("Kører på http://localhost:3000");
 });
